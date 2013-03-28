@@ -8,6 +8,38 @@
 		<script src="scripts/ssCalc.js"></script>
 	</head>
 	<body>
+		<table>
+			<tr>
+				<th>Sets x Reps</th>
+				<th>Total</th>
+				<th>Per Side</th>
+			</tr>
+			<tr>
+				<td>2x5</td>
+				<td><input type="text" data-bind="value: startWeight, valueUpdate:'afterkeydown'" /></td>
+				<td data-bind="text: (startWeight() - 45) / 2"></td>
+			</tr>
+			<tr>
+				<td>1x5</td>
+				<td data-bind="text: onebyfive"></td>
+				<td data-bind="text: (onebyfive() - 45) / 2"></td>
+			</tr>
+			<tr>
+				<td>1x3</td>
+				<td data-bind="text: onebythree"></td>
+				<td data-bind="text: (onebythree() - 45) / 2"></td>
+			</tr>
+			<tr>
+				<td>1x2</td>
+				<td data-bind="text: onebytwo"></td>
+				<td data-bind="text: (onebytwo() - 45) / 2"></td>
+			</tr>
+			<tr>
+				<td>3x5</td>
+				<td><input type="text" data-bind="value: workWeight, valueUpdate:'afterkeydown'" /></td>
+				<td data-bind="text: (workWeight() - 45) / 2"></td>
+			</tr>
+		</table>
 		<div class="helloWorld" data-bind="text: helloWorld"></div>
 	</body>
 </html>
