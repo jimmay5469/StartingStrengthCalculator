@@ -49,7 +49,7 @@
 				<td data-bind="text: (onebytwo() - 45) / 2"></td>
 			</tr>
 			<tr>
-				<td>3x5</td>
+				<td>3x5/1x5/5x3</td>
 				<td data-bind="text: workWeight"></td>
 				<td data-bind="text: (workWeight() - 45) / 2"></td>
 			</tr>
@@ -67,6 +67,19 @@
 				<td>Warmup Starting Weight:</td>
 				<td><input type="number" data-bind="value: startWeight" /></td>
 			</tr>
+			<tr>
+				<td>1x5 Multiplier*</td>
+				<td><input type="number" data-bind="value: onebyfivemultiplier" />%</td>
+			</tr>
+			<tr>
+				<td>1x3 Multiplier*</td>
+				<td><input type="number" data-bind="value: onebythreemultiplier" />%</td>
+			</tr>
+			<tr>
+				<td>1x2 Multiplier*</td>
+				<td><input type="number" data-bind="value: onebytwomultiplier" />%</td>
+			</tr>
 		</table>
+		*Multipliers are a percentage of the difference between Warmup Starting Weight and Workset Weight.  They are not the percentage of the Workset Weight.
 	</body>
 </html>
