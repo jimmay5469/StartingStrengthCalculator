@@ -4,7 +4,8 @@ $(function () {
 
 	var defaultSettings = {
 		startWeight: [45,45,45,45,45],
-		workWeight: [200,200,200,200,200]
+		previousWeight: [200,200,200,200,200],
+		weightIncrease: [5,5,5,5,5]
 	};
 	var settings = defaultSettings;
 	if($.cookie('ssCalcSettings')) {
@@ -24,8 +25,12 @@ $(function () {
 
 		self.selectedLift = ko.observable();
 		self.startWeight = ko.observable(settings.startWeight[0]);
-		self.workWeight = ko.observable(settings.workWeight[0]);
-
+		self.previousWeight = ko.observable(settings.previousWeight[0]);
+		self.weightIncrease = ko.observable(settings.weightIncrease[0]);
+		
+		self.workWeight = ko.computed(function () {
+			return parseFloat(self.previousWeight()) + parseFloat(self.weightIncrease());
+		});
 		self.onebyfive = ko.computed(function() {
 			return calculateWarmupWeight(self.startWeight(), self.workWeight(), 0.25);
 		});
@@ -38,16 +43,22 @@ $(function () {
 
 		self.selectedLift.subscribe(function(newValue) {
 			self.startWeight(settings.startWeight[newValue.value]);
-			self.workWeight(settings.workWeight[newValue.value]);
+			self.previousWeight(settings.previousWeight[newValue.value]);
+			self.weightIncrease(settings.weightIncrease[newValue.value]);
 		});
 
-		self.startWeight.subscribe(persistSettings);
-		self.workWeight.subscribe(persistSettings);
-		function persistSettings() {
+		self.startWeight.subscribe(function() {
 			settings.startWeight[self.selectedLift().value] = self.startWeight();
-			settings.workWeight[self.selectedLift().value] = self.workWeight();
 			$.cookie('ssCalcSettings', settings);
-		}
+		});
+		self.previousWeight.subscribe(function() {
+			settings.previousWeight[self.selectedLift().value] = self.previousWeight();
+			$.cookie('ssCalcSettings', settings);
+		});
+		self.weightIncrease.subscribe(function() {
+			settings.weightIncrease[self.selectedLift().value] = self.weightIncrease();
+			$.cookie('ssCalcSettings', settings);
+		});
 	}
 	ko.applyBindings(new ssCalcViewModel());
 

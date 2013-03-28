@@ -11,7 +11,18 @@
 		<script src="scripts/ssCalc.js"></script>
 	</head>
 	<body>
-		<table>
+		<table id="lift">
+			<tr>
+				<th>Lift:</th>
+				<th>Last Successful Workset Weight:</th>
+			</tr>
+			<tr>
+				<td><select data-bind="options: Lifts, value: selectedLift, optionsText: 'name'" /></td>
+				<td><input type="number" data-bind="value: previousWeight" /></td>
+			</tr>
+		</table>
+		<br />
+		<table id="workoutDescription">
 			<tr>
 				<th>Sets x Reps</th>
 				<th>Total</th>
@@ -19,7 +30,7 @@
 			</tr>
 			<tr>
 				<td>2x5</td>
-				<td><input type="number" data-bind="value: startWeight" /></td>
+				<td data-bind="text: startWeight"></td>
 				<td data-bind="text: (startWeight() - 45) / 2"></td>
 			</tr>
 			<tr>
@@ -39,15 +50,22 @@
 			</tr>
 			<tr>
 				<td>3x5</td>
-				<td><input type="number" data-bind="value: workWeight" /></td>
+				<td data-bind="text: workWeight"></td>
 				<td data-bind="text: (workWeight() - 45) / 2"></td>
 			</tr>
 		</table>
-		<table>
+		<br />
+		<table id="settings">
 			<tr>
-				<td>Lift:</td>
-				<td><select data-bind="options: Lifts, value: selectedLift, optionsText: 'name'" /></td>
-				<td></td>
+				<th colspan="2">Settings</th>
+			</tr>
+			<tr>
+				<td>Increase Per Workout:</td>
+				<td><input type="number" data-bind="value: weightIncrease" /></td>
+			</tr>
+			<tr>
+				<td>Warmup Starting Weight:</td>
+				<td><input type="number" data-bind="value: startWeight" /></td>
 			</tr>
 		</table>
 	</body>
