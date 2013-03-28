@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Starting Strength Calculator</title>
+		<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0;" />
 		<link rel="stylesheet" href="styles/ssCalc.css" type="text/css" />
 		<script src="scripts/jquery-1.9.1.min.js"></script>
 		<script src="scripts/knockout-2.2.1.js"></script>
@@ -16,7 +17,7 @@
 			</tr>
 			<tr>
 				<td>2x5</td>
-				<td><input type="text" data-bind="value: startWeight, valueUpdate:'afterkeydown'" /></td>
+				<td><input type="number" data-bind="value: startWeight, valueUpdate:'afterkeydown'" /></td>
 				<td data-bind="text: (startWeight() - 45) / 2"></td>
 			</tr>
 			<tr>
@@ -36,7 +37,7 @@
 			</tr>
 			<tr>
 				<td>3x5</td>
-				<td><input type="text" data-bind="value: workWeight, valueUpdate:'afterkeydown'" /></td>
+				<td><input type="number" data-bind="value: workWeight, valueUpdate:'afterkeydown'" /></td>
 				<td data-bind="text: (workWeight() - 45) / 2"></td>
 			</tr>
 		</table>
