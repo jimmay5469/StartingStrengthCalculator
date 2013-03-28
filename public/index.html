@@ -31,27 +31,27 @@
 			<tr>
 				<td>2x5</td>
 				<td data-bind="text: startWeight"></td>
-				<td data-bind="text: (startWeight() - 45) / 2"></td>
+				<td data-bind="text: (startWeight() - barWeight()) / 2"></td>
 			</tr>
 			<tr>
 				<td>1x5</td>
 				<td data-bind="text: onebyfive"></td>
-				<td data-bind="text: (onebyfive() - 45) / 2"></td>
+				<td data-bind="text: (onebyfive() - barWeight()) / 2"></td>
 			</tr>
 			<tr>
 				<td>1x3</td>
 				<td data-bind="text: onebythree"></td>
-				<td data-bind="text: (onebythree() - 45) / 2"></td>
+				<td data-bind="text: (onebythree() - barWeight()) / 2"></td>
 			</tr>
 			<tr>
 				<td>1x2</td>
 				<td data-bind="text: onebytwo"></td>
-				<td data-bind="text: (onebytwo() - 45) / 2"></td>
+				<td data-bind="text: (onebytwo() - barWeight()) / 2"></td>
 			</tr>
 			<tr>
 				<td>3x5/1x5/5x3</td>
 				<td data-bind="text: workWeight"></td>
-				<td data-bind="text: (workWeight() - 45) / 2"></td>
+				<td data-bind="text: (workWeight() - barWeight()) / 2"></td>
 			</tr>
 		</table>
 		<br />
@@ -60,7 +60,7 @@
 		<div data-bind="visible: showSettings">
 			<table id="settings">
 				<tr>
-					<th colspan="2">Settings</th>
+					<th colspan="2" data-bind="text: selectedLift().name + ' Settings'"></th>
 				</tr>
 				<tr>
 					<td>Increase Per Workout:</td>
@@ -84,6 +84,20 @@
 				</tr>
 			</table>
 			*Multipliers are a percentage of the difference between Warmup Starting Weight and Workset Weight.  They are not the percentage of the Workset Weight.
+			<br /><br />
+			<table id="settings">
+				<tr>
+					<th colspan="2">Global Settings</th>
+				</tr>
+				<tr>
+					<td>Bar Weight:</td>
+					<td><input type="number" data-bind="value: barWeight" /></td>
+				</tr>
+				<tr>
+					<td>Smallest Weight Increment:</td>
+					<td><input type="number" data-bind="value: smallestIncrement" /></td>
+				</tr>
+			</table>
 		</div>
 	</body>
 </html>

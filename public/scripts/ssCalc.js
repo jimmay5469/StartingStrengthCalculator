@@ -8,7 +8,9 @@ $(function () {
 		weightIncrease: [5,5,5,5,5],
 		onebyfivemultiplier: [25,25,25,25,25],
 		onebythreemultiplier: [50,50,50,50,50],
-		onebytwomultiplier: [75,75,75,75,75]
+		onebytwomultiplier: [75,75,75,75,75],
+		barWeight: 45,
+		smallestIncrement: 5
 	};
 	var settings = defaultSettings;
 	if($.cookie('ssCalcSettings')) {
@@ -34,18 +36,20 @@ $(function () {
 		self.onebyfivemultiplier = ko.observable(settings.onebyfivemultiplier[0]);
 		self.onebythreemultiplier = ko.observable(settings.onebythreemultiplier[0]);
 		self.onebytwomultiplier = ko.observable(settings.onebytwomultiplier[0]);
+		self.barWeight = ko.observable(settings.barWeight);
+		self.smallestIncrement = ko.observable(settings.smallestIncrement);
 		
 		self.workWeight = ko.computed(function () {
 			return parseFloat(self.previousWeight()) + parseFloat(self.weightIncrease());
 		});
 		self.onebyfive = ko.computed(function() {
-			return calculateWarmupWeight(self.startWeight(), self.workWeight(), self.onebyfivemultiplier());
+			return calculateWarmupWeight(self.startWeight(), self.workWeight(), self.onebyfivemultiplier(), self.smallestIncrement());
 		});
 		self.onebythree = ko.computed(function() {
-			return calculateWarmupWeight(self.startWeight(), self.workWeight(), self.onebythreemultiplier());
+			return calculateWarmupWeight(self.startWeight(), self.workWeight(), self.onebythreemultiplier(), self.smallestIncrement());
 		});
 		self.onebytwo = ko.computed(function() {
-			return calculateWarmupWeight(self.startWeight(), self.workWeight(), self.onebytwomultiplier());
+			return calculateWarmupWeight(self.startWeight(), self.workWeight(), self.onebytwomultiplier(), self.smallestIncrement());
 		});
 
 		self.selectedLift.subscribe(function(newValue) {
@@ -81,14 +85,22 @@ $(function () {
 			settings.onebytwomultiplier[self.selectedLift().value] = self.onebytwomultiplier();
 			$.cookie('ssCalcSettings', settings);
 		});
+		self.barWeight.subscribe(function() {
+			settings.barWeight = self.barWeight();
+			$.cookie('ssCalcSettings', settings);
+		});
+		self.smallestIncrement.subscribe(function() {
+			settings.smallestIncrement = self.smallestIncrement();
+			$.cookie('ssCalcSettings', settings);
+		});
 	}
 	ko.applyBindings(new ssCalcViewModel());
 
-	function calculateWarmupWeight(startWeight, workWeight, multiplier) {
+	function calculateWarmupWeight(startWeight, workWeight, multiplier, smallestIncrement) {
 		startWeight = parseFloat(startWeight);
 		workWeight = parseFloat(workWeight);
 		multiplier = parseFloat(multiplier);
-		return Math.floor((workWeight - startWeight) * (multiplier / 100) / 5) * 5 + startWeight;
+		return Math.floor((workWeight - startWeight) * (multiplier / 100) / smallestIncrement) * smallestIncrement + startWeight;
 	}
 });
 // Warmup Set Formula = ((Work Weight - Starting Weight) x Multiplier) + Starting Weight
