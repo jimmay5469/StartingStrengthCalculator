@@ -6,19 +6,13 @@ $(function () {
 		startWeight: [45,45,45,45,45],
 		workWeight: [200,200,200,200,200]
 	};
-
 	var settings = defaultSettings;
 	if($.cookie('ssCalcSettings')) {
 		settings = $.extend(defaultSettings, $.cookie('ssCalcSettings'));
 	}
-	$.cookie('ssCalcSettings', settings);
 
 	function ssCalcViewModel() {
 		var self = this;
-
-		self.selectedLift = ko.observable();
-		self.startWeight = ko.observable(settings.startWeight[0]);
-		self.workWeight = ko.observable(settings.workWeight[0]);
 
 		self.Lifts = ko.observableArray([
 			{ name: 'Squat', value: 0 },
@@ -27,6 +21,10 @@ $(function () {
 			{ name: 'Deadlift', value: 3 },
 			{ name: 'Power Clean', value: 4 }
 		]);
+
+		self.selectedLift = ko.observable();
+		self.startWeight = ko.observable(settings.startWeight[0]);
+		self.workWeight = ko.observable(settings.workWeight[0]);
 
 		self.onebyfive = ko.computed(function() {
 			return calculateWarmupWeight(self.startWeight(), self.workWeight(), 0.25);
@@ -39,21 +37,18 @@ $(function () {
 		});
 
 		self.selectedLift.subscribe(function(newValue) {
-			var currentSettings = $.cookie('ssCalcSettings');
-			self.startWeight(currentSettings.startWeight[newValue.value]);
-			self.workWeight(currentSettings.workWeight[newValue.value]);
+			self.startWeight(settings.startWeight[newValue.value]);
+			self.workWeight(settings.workWeight[newValue.value]);
 		});
 
 		self.startWeight.subscribe(persistSettings);
 		self.workWeight.subscribe(persistSettings);
 		function persistSettings() {
-			var newSettings = $.cookie('ssCalcSettings');
-			newSettings.startWeight[self.selectedLift().value] = self.startWeight();
-			newSettings.workWeight[self.selectedLift().value] = self.workWeight();
-			$.cookie('ssCalcSettings', newSettings);
+			settings.startWeight[self.selectedLift().value] = self.startWeight();
+			settings.workWeight[self.selectedLift().value] = self.workWeight();
+			$.cookie('ssCalcSettings', settings);
 		}
 	}
-	
 	ko.applyBindings(new ssCalcViewModel());
 
 	function calculateWarmupWeight(startWeight, workWeight, multiplier) {
