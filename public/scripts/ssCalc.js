@@ -3,20 +3,30 @@ $(function () {
 	$.cookie.json = true;
 
 	var defaultSettings = {
-		startWeight: 45,
-		workWeight: 135
+		startWeight: [45,45,45,45,45],
+		workWeight: [200,200,200,200,200]
 	};
-	
+
 	var settings = defaultSettings;
 	if($.cookie('ssCalcSettings')) {
 		settings = $.extend(defaultSettings, $.cookie('ssCalcSettings'));
 	}
+	$.cookie('ssCalcSettings', settings);
 
 	function ssCalcViewModel() {
 		var self = this;
 
-		self.startWeight = ko.observable(settings.startWeight);
-		self.workWeight = ko.observable(settings.workWeight);
+		self.selectedLift = ko.observable();
+		self.startWeight = ko.observable(settings.startWeight[0]);
+		self.workWeight = ko.observable(settings.workWeight[0]);
+
+		self.Lifts = ko.observableArray([
+			{ name: 'Squat', value: 0 },
+			{ name: 'Overhead Press', value: 1 },
+			{ name: 'Bench Press', value: 2 },
+			{ name: 'Deadlift', value: 3 },
+			{ name: 'Power Clean', value: 4 }
+		]);
 
 		self.onebyfive = ko.computed(function() {
 			return calculateWarmupWeight(self.startWeight(), self.workWeight(), 0.25);
@@ -28,13 +38,18 @@ $(function () {
 			return calculateWarmupWeight(self.startWeight(), self.workWeight(), 0.75);
 		});
 
+		self.selectedLift.subscribe(function(newValue) {
+			var currentSettings = $.cookie('ssCalcSettings');
+			self.startWeight(currentSettings.startWeight[newValue.value]);
+			self.workWeight(currentSettings.workWeight[newValue.value]);
+		});
+
 		self.startWeight.subscribe(persistSettings);
 		self.workWeight.subscribe(persistSettings);
 		function persistSettings() {
-			var newSettings = {
-				startWeight: self.startWeight(),
-				workWeight: self.workWeight()
-			}
+			var newSettings = $.cookie('ssCalcSettings');
+			newSettings.startWeight[self.selectedLift().value] = self.startWeight();
+			newSettings.workWeight[self.selectedLift().value] = self.workWeight();
 			$.cookie('ssCalcSettings', newSettings);
 		}
 	}

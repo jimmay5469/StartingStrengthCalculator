@@ -43,6 +43,12 @@
 				<td data-bind="text: (workWeight() - 45) / 2"></td>
 			</tr>
 		</table>
-		<div class="helloWorld" data-bind="text: helloWorld"></div>
+		<table>
+			<tr>
+				<td>Lift:</td>
+				<td><select data-bind="options: Lifts, value: selectedLift, optionsText: 'name'" /></td>
+				<td></td>
+			</tr>
+		</table>
 	</body>
 </html>
