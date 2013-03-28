@@ -17,7 +17,7 @@
 				<th>Last Successful Workset Weight:</th>
 			</tr>
 			<tr>
-				<td><select data-bind="options: Lifts, value: selectedLift, optionsText: 'name'" /></td>
+				<td><select data-bind="options: lifts, value: selectedLift, optionsText: 'name'" /></td>
 				<td><input type="number" data-bind="value: previousWeight" /></td>
 			</tr>
 		</table>
@@ -55,31 +55,35 @@
 			</tr>
 		</table>
 		<br />
-		<table id="settings">
-			<tr>
-				<th colspan="2">Settings</th>
-			</tr>
-			<tr>
-				<td>Increase Per Workout:</td>
-				<td><input type="number" data-bind="value: weightIncrease" /></td>
-			</tr>
-			<tr>
-				<td>Warmup Starting Weight:</td>
-				<td><input type="number" data-bind="value: startWeight" /></td>
-			</tr>
-			<tr>
-				<td>1x5 Multiplier*</td>
-				<td><input type="number" data-bind="value: onebyfivemultiplier" />%</td>
-			</tr>
-			<tr>
-				<td>1x3 Multiplier*</td>
-				<td><input type="number" data-bind="value: onebythreemultiplier" />%</td>
-			</tr>
-			<tr>
-				<td>1x2 Multiplier*</td>
-				<td><input type="number" data-bind="value: onebytwomultiplier" />%</td>
-			</tr>
-		</table>
-		*Multipliers are a percentage of the difference between Warmup Starting Weight and Workset Weight.  They are not the percentage of the Workset Weight.
+		<label><input type="checkbox" data-bind="checked: showSettings" /> Show Settings</label>
+		<br /><br />
+		<div data-bind="visible: showSettings">
+			<table id="settings">
+				<tr>
+					<th colspan="2">Settings</th>
+				</tr>
+				<tr>
+					<td>Increase Per Workout:</td>
+					<td><input type="number" data-bind="value: weightIncrease" /></td>
+				</tr>
+				<tr>
+					<td>Warmup Starting Weight:</td>
+					<td><input type="number" data-bind="value: startWeight" /></td>
+				</tr>
+				<tr>
+					<td>1x5 Multiplier*</td>
+					<td><input type="number" data-bind="value: onebyfivemultiplier" />%</td>
+				</tr>
+				<tr>
+					<td>1x3 Multiplier*</td>
+					<td><input type="number" data-bind="value: onebythreemultiplier" />%</td>
+				</tr>
+				<tr>
+					<td>1x2 Multiplier*</td>
+					<td><input type="number" data-bind="value: onebytwomultiplier" />%</td>
+				</tr>
+			</table>
+			*Multipliers are a percentage of the difference between Warmup Starting Weight and Workset Weight.  They are not the percentage of the Workset Weight.
+		</div>
 	</body>
 </html>

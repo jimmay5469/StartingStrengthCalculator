@@ -18,13 +18,14 @@ $(function () {
 	function ssCalcViewModel() {
 		var self = this;
 
-		self.Lifts = ko.observableArray([
+		self.lifts = ko.observableArray([
 			{ name: 'Squat', value: 0 },
 			{ name: 'Overhead Press', value: 1 },
 			{ name: 'Bench Press', value: 2 },
 			{ name: 'Deadlift', value: 3 },
 			{ name: 'Power Clean', value: 4 }
 		]);
+		self.showSettings = ko.observable(false);
 
 		self.selectedLift = ko.observable();
 		self.startWeight = ko.observable(settings.startWeight[0]);
